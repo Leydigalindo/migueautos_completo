@@ -1129,7 +1129,7 @@ html{
 .left-0{
   left: 0px;
 }
-
+.left-
 .top-3{
   top: 0.75rem;
 }
@@ -1141,13 +1141,18 @@ html{
 .right-2{
   right: 0.5rem;
 }
-
+.right-10{
+  right: 1.5rem;
+}
 .bottom-\[60px\]{
   bottom: 60px;
 }
 
 .bottom-0{
   bottom: 0px;
+}
+.bottom-14{
+  bottom: 7rem; 
 }
 
 .z-10{
@@ -1263,7 +1268,9 @@ html{
 .mt-5{
   margin-top: 1.25rem;
 }
-
+.ml-24{
+  margin-left: 9rem;
+}
 .ml-32{
   margin-left: 8rem;
 }
@@ -1287,7 +1294,9 @@ html{
 .mb-1{
   margin-bottom: 0.25rem;
 }
-
+.mb-14{
+  margin-bottom: 3.5rem;
+}
 .block{
   display: block;
 }
@@ -1323,7 +1332,9 @@ html{
 .h-6{
   height: 1.5rem;
 }
-
+.h-7	{
+  height: 1.75rem;
+}
 .h-48{
   height: 12rem;
 }

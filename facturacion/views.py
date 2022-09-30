@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.shortcuts import render
-
+from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
 from django.db import models
 
@@ -13,7 +13,7 @@ from registro.models import *
 
 
 # Create your views here.
-
+@login_required(login_url='/login/')
 def factura(request):
     titulo_pag = 'Creando factura'
     usuarios= Usuario.objects.all()
@@ -46,7 +46,7 @@ def factura(request):
     }
     return render(request,'app-factura/factura/crearFactura.html', context)
 
-
+@login_required(login_url='/login/')
 def detalle(request,pk):
     titulo_pagina="facturas"
     detalles= Detalle.objects.filter(factura_id=pk)
@@ -134,7 +134,7 @@ def detalle(request,pk):
     }
     return render(request, "app-factura/detalle/detallefactura.html", context)
 
-
+@login_required(login_url='/login/')
 def detalle_estado(request,pk,cantidad ):
     titulo_pagina='producto'
     u_detalles= Detalle.objects.get(id=pk)
@@ -190,7 +190,8 @@ def ver_factura(request,pk):
         'titulo_pag':titulo_pag,
         }
     return render(request,"app-factura/factura/verfactura.html", context)
-    
+
+@login_required(login_url='/login/')    
 def factura_eliminar(request,pk):
     titulo_pagina='Factura'
     tfacturas= Factura.objects.all()
@@ -214,7 +215,7 @@ def factura_eliminar(request,pk):
             
     }
     return render(request, "app-factura/factura/facturaeliminar.html", context)    
-    
+@login_required(login_url='/login/')    
 def factura_estado(request,pk, estado):
 
     tfactura= Factura.objects.get(id=pk)
