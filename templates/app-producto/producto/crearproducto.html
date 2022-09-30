@@ -66,10 +66,7 @@
             </form>
         </div>
     </div>
-    <div
-        class="max-w-full p-6 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-md col dark:bg-gray-800 dark:border-gray-700">
-
-
+    <div class="max-w-full p-6 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-md col dark:bg-gray-800 dark:border-gray-700">
         <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="py-4 sm:px-6 lg:px-8">
 
@@ -97,6 +94,12 @@
                                 </th>
                                 <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
                                     Imagen
+                                </th>
+                                <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
+                                   Fecha de creacion
+                                </th>
+                                <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
+                                    Fecha de ultimo editado
                                 </th>
                                 <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
                                     Opciones
@@ -131,6 +134,8 @@
                                 <td>
                                     <img src="{{ producto.get_image }}" class="block mx-auto img-responsive" style="width: 50px; height: 50px;" alt="imagen-producto">
                                     </td>
+                                    <td>{{producto.date_created}}</td>
+                                    <td>{{producto.date_updated}}</td>
                                 <td class="flex justify-around px-6 py-4 text-right">
                                     <a href="{% url 'producto-editarproducto' producto.id %}"
                                         class="font-medium text-light-white md:hover:text-blue-700 dark:text-blue-500">
