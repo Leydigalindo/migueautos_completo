@@ -4,10 +4,13 @@
 {% block title %} Factura {% endblock title %}
 
 {% block content %}
-<button data-tooltip-target="tooltip-volver" data-tooltip-trigger="hover" type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-0 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5"  onclick = "history.back ()">
-    <svg class="h-8 mr-3 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"></path></svg>
-  </button>
-  <div id="tooltip-volver" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+<button data-tooltip-target="tooltip-flecha" data-tooltip-trigger="hover" type="button"
+    class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-0 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5"
+    onclick="history.back ()">
+    <img src="{% static 'img/flecha-izquierda.png' %}" class="h-6 mr-3 sm:h-9" alt="">
+</button>
+<div id="tooltip-flecha" role="tooltip"
+    class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
     Volver
     <div class="tooltip-arrow" data-popper-arrow></div>
 </div>
@@ -30,11 +33,11 @@
                     <div class="mb-3">
                         <div class="relative">
                             <select
-                                class="block w-full px-4 py-2 leading-normal text-gray-700 bg-white border border-gray-300 rounded-lg appearance-none select1 js-example-basic-single focus:outline-none"
+                                class="block w-full px-4 py-2 leading-normal text-gray-700 bg-white border border-gray-300 rounded-lg appearance-none select1 js-example-basic-single focus:outline-none " required
                                 name="usuario ">
                                 <option value="">---------</option>
                                 {% for usuarios in usuario %}
-                                <option value="{{usuarios.id}}">{{usuarios.identificacion}}</option>
+                                <option value="{{usuarios.id}}">{{usuarios.identificacion}} {{usuarios.nombre}}</option>
                                 {% endfor %}
 
                             </select>
@@ -49,7 +52,7 @@
                         <div class="relative">
                             <select
                                 class="block w-full px-4 py-2 leading-normal text-gray-700 bg-white border border-gray-300 rounded-lg appearance-none js-example-basic-single select2 focus:outline-none"
-                                name="vehiculo">
+                                name="vehiculo" required>
                                 <option value="">---------</option>
                                 
                                 {% for vehiculo in vehiculos %}
@@ -75,7 +78,7 @@
         </div>
     </div>
     <div
-        class="max-w-full p-6 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-md col dark:bg-gray-800 dark:border-gray-700">
+        class="max-w-3xl p-6 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-md col dark:bg-gray-800 dark:border-gray-700">
         <!-- table -->
         <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="py-4 sm:px-6 lg:px-8">
@@ -90,10 +93,7 @@
                                     Vehículo
                                 </th>
                                 <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
-                                    Total
-                                </th>
-                                <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
-                                    Decisión
+                                    Valor
                                 </th>
                                 <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
                                     Estado
@@ -113,28 +113,20 @@
                                 </th>
                                 <td class="px-6 py-4">{{facturas.vehiculo}}</td>
                                 <td class="px-6 py-4">{{facturas.valor}}</td>
-                                <td class="px-6 py-4">{{facturas.decision}}</td>
                                 <td class="px-6 py-4">{{facturas.estado}}</td>
 
                                 <td class="flex justify-around px-6 py-4 text-right">
                                     {% comment %} Editar {% endcomment %}
+                                    {% if facturas.estado == 'Abierta' %}
+                                    {% comment %} Eliminar {% endcomment %}
+                                    
+                                    
+                                    
                                     <a href="{% url 'factura_estado' facturas.id facturas.estado %}"
                                         data-modal-toggle="popup-modal" title="Inactivo"
-                                        class="font-medium text-light-white md:hover:text-blue-700 dark:text-blue-500"><svg
-                                            class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd"
-                                                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                                clip-rule="evenodd"></path>
-                                        </svg>
+                                        class="font-medium text-light-white md:hover:text-blue-700 dark:text-blue-500"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
                                     </a>
-                                    {% comment %} Eliminar {% endcomment %}
 
-                                    {% if usuario.estado == 'Activo' %}
-
-
-
-                                    {% else  %}
                                     <a href="{% url 'detalle' facturas.id %}" data-tooltip-target="tooltip-bottom"
                                         data-tooltip-placement="bottom" type="button"
                                         class="font-medium text-light-white md:hover:text-blue-700 dark:text-blue-500 hover:underline"
@@ -148,9 +140,16 @@
                                     </a>
                                     <div id="tooltip-bottom" role="tooltip"
                                         class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                                        Compras de la factura
+                                        compras de la factura
                                         <div class="tooltip-arrow" data-popper-arrow></div>
                                     </div>
+                                    
+                                    {% endif %}
+                                    {% if facturas.estado == 'Cerrada' %}
+                                    <a href="{% url 'vizualizar' facturas.id %}"
+                                        data-modal-toggle="popup-modal" title="Inactivo"
+                                        class="font-medium text-light-white md:hover:text-blue-700 dark:text-blue-500"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path></svg>
+                                    </a>
                                     {% endif %}
                                 </td>
                             </tr>

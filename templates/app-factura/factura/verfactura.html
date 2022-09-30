@@ -1,0 +1,81 @@
+{% extends '_base.html' %}
+{% load tailwind_filters %}
+{% block title %}
+vizualizar factura
+{% endblock title %}
+
+{% block content %}
+    
+
+<div class="flex flex-col w-full mb-20 text-center">
+    <h1 class="mb-2 text-3xl font-medium text-gray-900 print:hidden sm:text-4xl title-font">{{titulo_pag }}</h1>
+    <p class="mx-auto text-base leading-relaxed print:hidden lg:w-2/3">seleccione los productos que desea facturar.</p>
+    
+</div>
+<div class="flex mx-auto mt-6 overflow-hidden border-2 border-indigo-500 rounded">
+    
+    <div class="w-full p-4 xl:w-full md:w-1/2">
+        <div class="max-w-full p-6 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-md col dark:bg-gray-800 dark:border-gray-700"> 
+        <div class="relative flex flex-col h-full p-6 overflow-hidden border-2 border-gray-300 rounded-lg">
+            <table  class="min-w-full text-sm text-left text-gray-500 rounded-sm dark:text-gray-400">
+                <thead class="text-xs text-gray-700 bg-light-white dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
+                            Nombre
+                        </th>
+                        <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
+                            categoria
+                        </th>
+                        <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
+                            marca
+                        </th>
+                        <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
+                            imagen
+                        </th>
+                        <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
+                            cantidad
+                        </th>
+                        <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
+                            precio
+                        </th>
+                        
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for obj in detalle %}
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                                >
+                                {% if obj.estado == "Abierta" %}
+                                  
+                                
+                                <td>{{obj.producto.nombre}}</td>
+                                <td>{{obj.producto.categoria}}</td>
+                                <td>{{obj.producto.marca}}</td>
+                                <td><img src="{{ obj.producto.get_image }}" style="width: 50px; height: 50px;" alt="imagen-producto"></td>
+                                <td>{{obj.cantidad_detalle}}</td>
+                                <td>{{obj.total}}</td>
+                                
+                                            
+                                    
+                  
+                            </tr>
+                                  {% endif %}
+                                {% endfor %}
+                                
+                    </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="print:hidden">
+                generar reporte
+                <button>imprimir</button>
+                <button>pdf</button>
+            </div>
+    </div>
+</div>
+<div  class="px-2 mb-2 font-sans text-xl font-bold text-center break-normal dark:text-white lg:mt-0 md:text-2xl">
+    <br>
+    Total de la factura: ${{factura.valor}}<br>
+</div>
+
+{% endblock content %}

@@ -1,135 +1,169 @@
-{% extends "_base.html" %}
-{% load static %}
+{% extends '_base.html' %}
 {% load tailwind_filters %}
-{% block title %} Factura {% endblock title %}
+{% block title %}
+Vizualizar factura
+{% endblock title %}
 
 {% block content %}
-<button data-tooltip-target="tooltip-volver" data-tooltip-trigger="hover" type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-0 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5"  onclick = "history.back ()">
-    <svg class="h-8 mr-3 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"></path></svg>
-  </button>
-  <div id="tooltip-volver" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-    Volver
-    <div class="tooltip-arrow" data-popper-arrow></div>
-</div>
-<div  class="px-2 mb-2 font-sans text-xl font-bold text-center break-normal dark:text-white lg:mt-0 md:text-2xl">
-    Factura generada para {{factura.usuario}}<br>
-    Placa: {{factura.vehiculo}} {{factura.factura}} <br>
 
+
+<div class="flex flex-col w-full mb-20 text-center">
+    <h1 class="mb-2 text-3xl font-medium text-gray-900 print:hidden sm:text-4xl title-font">{{titulo_pag }}</h1>
+    <p class="mx-auto text-base leading-relaxed print:hidden lg:w-2/3">Seleccione los productos que desea facturar.</p>
+    <div class="flex mx-auto mt-6 overflow-hidden rounded print:hidden">
+        <button class="px-4 py-1 text-white bg-indigo-500 focus:outline-none">Inventario</button>
+    </div>
 </div>
 <div class="container flex flex-wrap justify-center gap-10 overflow-hidden max-h-max">
-    
     <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
 
+            <div class="col">
+            <form action="" class="print:hidden" method="POST">    
 
-        <h1 class="px-2 mb-2 font-sans text-xl font-bold text-center break-normal dark:text-white lg:mt-0 md:text-2xl">
-            {{titulo_pag}}
-        </h1>
-        <!--Card-->
-        <!-- form -->
-        <div class="col">
-        <form method="POST" class="print:hidden">
-            {% csrf_token %}               
-            {{servicios|crispy}}
-            <div class="flex justify-center">
-                <button type="submit"
-                    class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800"
-                    value="Enviar informacion">
-                    Agregar producto
-                </button>
-                <button type="submit"
-                    class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800"
-                    value="Enviar informacion">
-                    Cerrar factura
-                </button>
-               
-            </div>
+                {% csrf_token %}
+                <div id="div_id_producto" class="mb-3"> <label for="id_producto"
+                        class="block mb-2 text-sm font-bold text-gray-700">
+                        Producto<span class="asteriskField">*</span> </label>
+                    <div class="mb-3">
+                        <div class="relative">
+                            <select
+                                class="block w-full px-4 py-2 leading-normal text-gray-700 bg-white border border-gray-300 rounded-lg appearance-none js-example-basic-single focus:outline-none"
+                                name="producto">
+                                <option value="">---------</option>
 
-        </form>
+                                {% for producto in productos %}
+
+                                <option value="{{producto.id}}">{{producto.nombre}} {{producto.categoria}} {{producto.stock}}</option>
+                                {% endfor %}
+
+                            </select>
+                            <div
+                                class="absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 pointer-events-none">    
+                                <svg class="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20">
+                                    <path
+                                        d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                {{servicios|crispy}}
+                
+                <div class="flex justify-center">
+
+
+                    <div class="flex justify-center">
+                        <button
+                            class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
+                            <span
+                                class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                                Añadir producto
+                            </span>
+                        </button>
+                    </div>
+                    <div class="flex justify-center">
+
+
+                        <a href="{% url 'factura_estado' pk=factura.id estado="Cerrada" %}"
+                            class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800">
+                            <span
+                                class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                                Cerrar factura
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-    </div>
-    
-        
-    <div class="max-w-full p-6 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-md col dark:bg-gray-800 dark:border-gray-700">
+    <div class="max-w-3xl p-6 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-md col dark:bg-gray-800 dark:border-gray-700">
         <!-- table -->
         <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="py-4 sm:px-6 lg:px-8">
                 <div class="overflow-hidden">
-                    <table class="min-w-full text-sm text-left text-gray-500 rounded-sm dark:text-gray-400">
-                        <thead
-                            class="text-xs text-gray-700 bg-light-white dark:bg-gray-700 dark:text-gray-400">
-                            <tr>
-                                <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
-                                    Cantidad del producto
-                                </th>
-                                <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
-                                    Producto
-                                </th>
-                                <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
-                                    Total del producto
-                                </th>
-                                <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
-                                    Decisión 
-                                </th>
-                                <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
-                                    Estado
-                                </th>
-                                <th scope="col" class="px-6 py-4 text-sm font-medium text-black print:hidden">
-                                    Opciones
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for facturas in detalle %}
-                            <tr
-                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <th scope="row"
-                                    class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                                    {{facturas.cantidad_detalle}}
-                                </th>
-                                <td class="px-6 py-4">{{facturas.producto.nombre}}</td>
-                                <td class="px-6 py-4">{{facturas.total}}</td>
-                                <td class="px-6 py-4">{{facturas.decision}}</td>
-                                <td class="px-6 py-4">{{facturas.estado}}</td>
-
-                                <td class="flex justify-around px-6 py-4 text-right print:hidden">
-                                    {% comment %} Editar {% endcomment %}
-                                    <a href="{% url 'factura_estado' facturas.id facturas.estado %}" data-modal-toggle="popup-modal" title="Inactivo"
-                                        class="font-medium text-light-white md:hover:text-blue-700 dark:text-blue-500"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
-                                    </a>
-                                    {% comment %} Eliminar {% endcomment %}
-
-                                    {% if usuario.estado == 'Activo' %}
-        
-
-                                        
-                                    {% else  %}
-                                    <a href="{% url 'detalle' facturas.id %}" data-tooltip-target="tooltip-bottom" data-tooltip-placement="bottom" type="button" class="font-medium text-light-white md:hover:text-blue-700 dark:text-blue-500 hover:underline"type="button" data-modal-toggle="popup-modal">
-                                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path></svg>
-                                    </a>
-                                    <div id="tooltip-bottom" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                                        Compras de la factura
-                                    <div class="tooltip-arrow" data-popper-arrow></div>
-                                 </div>
-                                    {% endif %}
+                    <table id="tabla" class="min-w-full text-sm text-left text-gray-500 rounded-sm dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 bg-light-white dark:bg-gray-700 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 bg-light-white dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
+                            Nombre
+                        </th>
+                        <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
+                            Categoría
+                        </th>
+                        <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
+                            Marca
+                        </th>
+                        <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
+                            Imagen
+                        </th>
+                        <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
+                            Cantidad
+                        </th>
+                        <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
+                            Precio
+                        </th>
+                        <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
+                            Opciones
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                {% for obj in detalle %}
+                                {% if obj.estado == "Abierta" %}
+                                  
+                                
+                                <td>{{obj.producto.nombre}}</td>
+                                <td>{{obj.producto.categoria}}</td>
+                                <td>{{obj.producto.marca}}</td>
+                                <td><img src="{{ obj.producto.get_image }}" style="width: 50px; height: 50px;" alt="imagen-producto"></td>
+                                <td>{{obj.cantidad_detalle}}</td>
+                                <td>{{obj.total}}</td>
+                                <td>
+                                    <div class="flex justify-center print:hidden">
+                                        <a href="{% url 'detalle_eliminar_estado' pk=obj.id  cantidad=obj.cantidad_detalle %}"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
+                                            <a href="{% url 'detalle_eliminar_estado' pk=obj.id  cantidad=obj.cantidad_detalle %}"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
+                                                <a href="{% url 'detalle_eliminar_estado' pk=obj.id  cantidad=obj.cantidad_detalle %}"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
+                                            </div>
+                                            
+                                    
+                  
+                                  {% endif %}
                                 </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
+                                {% endfor %}     
+                        </tr>
+                       </tbody>
                     </table>
-                </caption>
                 </div>
+            </div>
+            <div class="print:hidden">
+                <button> Generar reporte </button>
+                <button>Imprimir</button>
+                <button>Pdf</button>
+
             </div>
         </div>
     </div>
 </div>
-<div  class="px-2 mb-2 font-sans text-xl font-bold text-center break-normal dark:text-white lg:mt-0 md:text-2xl">
+<div class="px-2 mb-2 font-sans text-xl font-bold text-center break-normal dark:text-white lg:mt-0 md:text-2xl">
     <br>
     Total de la factura: ${{total}}<br>
-
 </div>
 
-      
-<!--Búsqueda-->
-
-<!--Tabla-->
+</div>
 {% endblock content %}
+{% block extrajs %}
+<script>
+
+    $(document).ready(function () {
+        $('.js-example-basic-single').select2({
+            language: "es"
+        });
+
+    });
+</script>
+{% endblock extrajs %}
