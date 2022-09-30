@@ -138,7 +138,7 @@ def detalle(request,pk):
 def detalle_estado(request,pk,cantidad ):
 
     u_detalles= Detalle.objects.get(id=pk)
-    factura_u= Factura.objects.get(id=pk)
+    factura_u= u_detalles.factura
     detalles= Detalle.objects.filter(factura_id=factura_u.id)
     titulo_pagina = f'Agregando productos a la factura #{factura_u.id}'
     accion_txt= f"el detalle {u_detalles.id} "
