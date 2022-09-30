@@ -19,7 +19,8 @@ def factura(request):
     usuarios= Usuario.objects.all()
     vehiculos = Vehículo.objects.all()
     facturas = Factura.objects.all()
-
+    
+    
     if request.method == 'POST':
         form = FacturaForm(request.POST)
         if Factura.objects.filter(usuario_id= request.POST['usuario '],vehiculo_id= request.POST['vehiculo'],).exists():
@@ -27,6 +28,7 @@ def factura(request):
             messages.warning(request,f'Ya hay una factura creada de ese usuario')
             return redirect('generar')
         else:
+            
             if form.is_valid():
                
                 aux= Factura.objects.create(
