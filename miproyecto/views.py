@@ -25,21 +25,20 @@ def index(request):
     }
     return render(request, 'index.html', context)
 
-
 def exportar_datos():
     fecha=date.today()
-    os.system(f"mysqldump --add-drop-table --column-statistics=0 -u root --password=1122 migueautos> static/backup/BKP_{fecha}.sql")
+    os.system(f"mysqldump --add-drop-table --column-statistics=0 -u root --password=0000 migueautos> static/backup/BKP_{fecha}.sql")
    
 
 def importar_datos(archivo):
     try:
-        os.system(f"mysql -u root password=1122 migueautos< {archivo[1:]}")
+        os.system(f"mysql -u root password=0000 migueautos< {archivo[1:]}")
     except:
         print("Problemas al importar")
        
 @login_required(login_url='/login/')            
 def backup(request,tipo):
-   
+       
     ejemplo_dir = 'static/backup/'
     with os.scandir(ejemplo_dir) as ficheros:
         ficheros = [fichero.name for fichero in ficheros if fichero.is_file()]
@@ -80,3 +79,11 @@ def backup(request,tipo):
         "backups":backups
     }
     return render(request, 'backup.html',context)  
+
+@login_required(login_url='/login/')
+def help(request):
+    context= {}
+    return render(request, 'Ayuda/help.html', context)
+def help2(request):
+    context= {}
+    return render(request, 'Ayuda/help-inicio.html', context)

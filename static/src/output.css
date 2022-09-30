@@ -1220,6 +1220,11 @@ html{
   margin-bottom: -0.25rem;
 }
 
+.mx-0{
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
 .mr-3{
   margin-right: 0.75rem;
 }
@@ -1652,6 +1657,10 @@ html{
 
 .gap-2{
   gap: 0.5rem;
+}
+
+.gap-6{
+  gap: 1.5rem;
 }
 
 .space-y-8 > :not([hidden]) ~ :not([hidden]){
@@ -3427,6 +3436,10 @@ html{
 
   .sm\:h-9{
     height: 2.25rem;
+  }
+
+  .sm\:h-7{
+    height: 1.75rem;
   }
 
   .sm\:w-full{

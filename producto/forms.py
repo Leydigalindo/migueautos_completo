@@ -22,7 +22,7 @@ class ProductoForm(ModelForm):
             pass
     class Meta:
         model= Producto
-        fields= ['image','categoria','nombre','precio', 'stock'] 
+        fields= ['image','categoria','nombre','precio', 'stock','marca'] 
         
 class DetalleForm(forms.Form):
     cantidad_stock = forms.IntegerField(label='cantidad_stock')
