@@ -5,8 +5,8 @@ from producto.models import *
 # Create your models here.
 
 class Factura(models.Model):
-    usuario = models.ForeignKey(Usuario,on_delete=models.CASCADE, verbose_name='usuario')
-    vehiculo = models.ForeignKey(Vehículo, on_delete=models.CASCADE, verbose_name='vehiculo')
+    usuario = models.ForeignKey(Usuario,on_delete=models.CASCADE, verbose_name='Usuario')
+    vehiculo = models.ForeignKey(Vehículo, on_delete=models.CASCADE, verbose_name='VehÍculo')
     valor = models.IntegerField(default=0, null=True, verbose_name='valor')
     class Estado(models.TextChoices):
         ABIERTA = 'Abierta', _('Abierta')

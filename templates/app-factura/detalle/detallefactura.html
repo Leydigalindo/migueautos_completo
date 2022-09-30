@@ -1,7 +1,7 @@
 {% extends '_base.html' %}
 {% load tailwind_filters %}
 {% block title %}
-vizualizar factura
+Vizualizar factura
 {% endblock title %}
 
 {% block content %}
@@ -9,15 +9,15 @@ vizualizar factura
 
 <div class="flex flex-col w-full mb-20 text-center">
     <h1 class="mb-2 text-3xl font-medium text-gray-900 print:hidden sm:text-4xl title-font">{{titulo_pag }}</h1>
-    <p class="mx-auto text-base leading-relaxed print:hidden lg:w-2/3">seleccione los productos que desea facturar.</p>
-    <div class="flex mx-auto mt-6 overflow-hidden border-2 border-indigo-500 rounded print:hidden">
+    <p class="mx-auto text-base leading-relaxed print:hidden lg:w-2/3">Seleccione los productos que desea facturar.</p>
+    <div class="flex mx-auto mt-6 overflow-hidden rounded print:hidden">
         <button class="px-4 py-1 text-white bg-indigo-500 focus:outline-none">Inventario</button>
-        <button class="px-4 py-1 focus:outline-none">Inactivos</button>
     </div>
 </div>
-<div class="flex mx-auto mt-6 overflow-hidden border-2 border-indigo-500 rounded">
-    <div class="w-full p-4 xl:w-1/3 print:hidden md:w-1/2">
-        <div class="relative flex flex-col h-full p-6 overflow-hidden border-2 border-gray-300 rounded-lg print:hidden">
+<div class="container flex flex-wrap justify-center gap-10 overflow-hidden max-h-max">
+    <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
+
+            <div class="col">
             <form action="" class="print:hidden" method="POST">    
                 {% csrf_token %}
                 {{servicios|crispy}}
@@ -44,38 +44,40 @@ vizualizar factura
                 </form>
         </div>
     </div>
-    <div class="w-full p-4 xl:w-full md:w-1/2">
-        <div class="max-w-full p-6 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-md col dark:bg-gray-800 dark:border-gray-700"> 
-        <div class="relative flex flex-col h-full p-6 overflow-hidden border-2 border-gray-300 rounded-lg">
-            <table  class="min-w-full text-sm text-left text-gray-500 rounded-sm dark:text-gray-400">
-                <thead class="text-xs text-gray-700 bg-light-white dark:bg-gray-700 dark:text-gray-400">
+    <div class="max-w-3xl p-6 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-md col dark:bg-gray-800 dark:border-gray-700">
+        <!-- table -->
+        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="py-4 sm:px-6 lg:px-8">
+                <div class="overflow-hidden">
+                    <table id="tabla" class="min-w-full text-sm text-left text-gray-500 rounded-sm dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 bg-light-white dark:bg-gray-700 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 bg-light-white dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
                             Nombre
                         </th>
                         <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
-                            categoria
+                            Categoría
                         </th>
                         <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
-                            marca
+                            Marca
                         </th>
                         <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
-                            imagen
+                            Imagen
                         </th>
                         <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
-                            cantidad
+                            Cantidad
                         </th>
                         <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
-                            precio
+                            Precio
                         </th>
                         <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
-                            opciones
+                            Opciones
                         </th>
                     </tr>
                     </thead>
                     <tbody>
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                                >
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 {% for obj in detalle %}
                                 {% if obj.estado == "Abierta" %}
                                   
@@ -96,18 +98,17 @@ vizualizar factura
                                     
                   
                                   {% endif %}
-                              </td>
-                                {% endfor %}
-                                
+                                </td>
+                                {% endfor %}     
                         </tr>
-                    </tbody>
+                       </tbody>
                     </table>
                 </div>
             </div>
             <div class="print:hidden">
-                generar reporte
-                <button>imprimir</button>
-                <button>pdf</button>
+                <button> Generar reporte </button>
+                <button>Imprimir</button>
+                <button>Pdf</button>
             </div>
     </div>
 </div>
@@ -115,5 +116,5 @@ vizualizar factura
     <br>
     Total de la factura: ${{total}}<br>
 </div>
-
+</div>
 {% endblock content %}

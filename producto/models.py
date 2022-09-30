@@ -34,7 +34,7 @@ class Producto(BaseModel):
     class Servicio(models.TextChoices):
         LATONERIA='Latoneria',_('Latoneria')
         PINTURA='Pintura',_('Pintura')
-    image = models.ImageField(upload_to='producto/%y/%m/%d',null=True, blank=True)
+    image = models.ImageField(upload_to='producto/%y/%m/%d',null=True, blank=True, verbose_name="Imagen" )
     categoria=models.CharField(max_length=10, choices=Servicio.choices, verbose_name="Categoría")
     nombre=models.CharField(max_length=50, verbose_name="Nombre del producto ")
     stock=models.IntegerField(verbose_name="Cantidad")
