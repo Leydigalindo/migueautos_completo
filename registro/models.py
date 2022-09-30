@@ -8,8 +8,8 @@ from miproyecto.models import BaseModel
 class Usuario(BaseModel):
     nombre = models.CharField(max_length=45, blank=False, unique= False, verbose_name=u"Nombre")
     apellido = models.CharField(max_length=45, blank=False, unique= False, verbose_name=u"Apellido")
-    identificacion=models.CharField(max_length=11, blank=True, unique=False, verbose_name="Numero de identificación")
-    telefono = models.CharField(max_length=13, blank=True, unique=True, verbose_name="Numero de celular")
+    identificacion=models.CharField(max_length=11, blank=True, unique=False, verbose_name="Número de identificación")
+    telefono = models.CharField(max_length=13, blank=True, unique=True, verbose_name="Número de celular")
     class Estado(models.TextChoices):
         ACTIVO='Activo', _('Activo')
         INACTIVO='Inactivo', _('Inactivo')
