@@ -136,46 +136,47 @@ def detalle(request,pk):
 
 @login_required(login_url='/login/')
 def detalle_estado(request,pk,cantidad ):
-    titulo_pagina='producto'
+
     u_detalles= Detalle.objects.get(id=pk)
-    factura_u= u_detalles.factura
+    factura_u= Factura.objects.get(id=pk)
     detalles= Detalle.objects.filter(factura_id=factura_u.id)
+    titulo_pagina = f'Agregando productos a la factura #{factura_u.id}'
     accion_txt= f"el detalle {u_detalles.id} "
    
     if request.method == 'POST':
-        if (factura_u.tipofactura =="Venta"):
+        if (factura_u.estado =="Abierta"):
             form= DetalleForm(request.POST)
             Producto.objects.filter(id=u_detalles.producto_id).update(
                 stock=Producto.objects.get(id=u_detalles.producto_id).stock + int(cantidad),
             )
             Factura.objects.filter(id=factura_u.id).update(
-                        neto_pagar=0
+                        valor=0
                         
             )
             u_detalles.delete()
             messages.success(request,f'Detalle elminado correctamente ')
-            return redirect('factura-detalle',factura_u.id)
+            return redirect('detalle',factura_u.id)
         else:
             form= DetalleForm(request.POST)
             Producto.objects.filter(id=u_detalles.producto_id).update(
                 stock=Producto.objects.get(id=u_detalles.producto_id).stock - int(cantidad),
             )
             Factura.objects.filter(id=factura_u.id).update(
-                        neto_pagar=0          
+                        valor=0          
             )
             u_detalles.delete()
             messages.success(request,f'Detalle eliminado correctamente ')
-            return redirect('factura-detalle',factura_u.id)
+            return redirect('detalle',factura_u.id)
         
     else:
         
         form=DetalleForm()
     context={
-            "titulo_pagina": titulo_pagina,
+            "titulo_pag": titulo_pagina,
             "accion_txt":accion_txt,
             "detalles": detalles,
             "factura":factura_u,
-            "form":form,
+            "servicios":form,
     }
     return render(request, "app-factura/detalle/detalle-eliminar.html", context)
 
@@ -239,7 +240,7 @@ def factura_estado(request,pk, estado):
         else:
             messages.warning(request,f'La factura {pk} no se puede eliminar, tiene productos registrados')
             return redirect('generar')
-    elif estado == "C0errada":
+    elif estado == "Cerrada":
         estado_txt= "Anular"
         estado_msj= f"Factura {tfactura.id}, una vez anulada no se podrá restablecer."
         if request.method == 'POST':
@@ -256,23 +257,37 @@ def factura_estado(request,pk, estado):
         if veridetalle.exists():
             estado_txt= "Cerrar"
             estado_msj= f"{estado_txt} La factura {tfactura.id}, una vez cerrada no se podrán agregar nuevos productos?"
-            if request.method == 'POST':
+            if request.method == 'POST' and 'aceptar':
                 form = FacturaForm(request.POST)
                 Factura.objects.filter(id=pk).update(
                             estado='Cerrada'
                         )
                 tfactura_usuario=  tfactura.usuario
                 messages.success(request,f'Factura {tfactura.id} cerrada correctamente')
-                return redirect('factura-tfactura')
+                return redirect('generar')
             else:
                 form:FacturaForm()
         else:
             messages.warning(request,f'La factura {pk} no se puede cerrar porque esta vacia')
-            return redirect('factura-detalle', pk)
+            return redirect('generar', pk)
     context={
         "titulo_pagina": titulo_pagina,
         "estado_msj":estado_msj,
         "estado_txt":estado_txt,
            
     }
-    return render(request, "app-factura/factura/factura-est     ado.html", context)
+    return render(request, "app-factura/factura/factura-estado.html", context)
+
+def vfactura (request,pk):
+    factura_u=Factura.objects.get(id=pk)
+    detalles= Detalle.objects.filter(factura_id=pk)
+
+    titulo_pagina=f"Factura generada para {factura_u.usuario}"
+
+    context={
+        "factura": factura_u,
+        "titulo_pag":titulo_pagina,
+        "detalle":detalles,
+    }
+    return render(request,"app-factura/factura/verfactura.html", context)
+

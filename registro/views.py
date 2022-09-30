@@ -23,11 +23,11 @@ def usuario(request): # se define la funcion para ver los usuarios
         'formulario': formulario,
     }
     return render (request, 'registro/usuario.html', context) # se renderiza la pagina
-
+ 
 
 @login_required(login_url='/login/') # se define la funcion para ver los vehiculos
 def vehiculo(request): # se define la funcion para ver los vehiculos
-    vehiculo_db = Vehículo.objects.all() # se carga la base de datos para ver los vehiculos
+    vehiculo_db = Vehículo.objects.exclude(estado="Inactivo") # se carga la base de datos para ver los vehiculos
     usuario_db = Usuario.objects.all() # se carga la base de datos para el select de usuario # se carga el formulario
     vehiculo = vehiculoForm(request.POST or None)
     if vehiculo.is_valid(): # si el formulario es valido
