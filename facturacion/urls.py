@@ -8,7 +8,7 @@ urlpatterns = [
     path('vizualizar/<int:pk>', vfactura, name='vizualizar'),
     
     
-    path('detalle-factura/estado/<int:pk>/<str:estado>/', factura_estado, name='factura_estado'),
+    path('detalle-estado/eliminar/<int:pk>/<str:cantidad>', detalle_estado, name='detalle_eliminar_estado'),
     path('detalle/<int:pk>/generada',detalle, name='detalle'),
     path('detalle-estado/eliminar/<int:pk>/<str:cantidad>', detalle_estado, name='detalle_eliminar_estado'),
 ]
