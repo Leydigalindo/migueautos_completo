@@ -1,0 +1,30 @@
+{% extends '_base.html' %}
+
+{% block title %}
+    vizualizar factura
+{% endblock title %}
+
+{% block content %}
+    {{titulo_pagina}}
+    es la factura # {{factura.id}}
+
+    <div class="">
+        este es el detalle factura <br><br>
+    {% for obj in detalles %}
+    <td>
+        <img src="{{ obj.producto.get_image }}"  style="width: 50px; height: 50px;" alt="imagen-producto">
+        
+    
+        producto: {{obj.producto.nombre}} <br> cantidad de compra:{{obj.cantidad_detalle}}  <br>valor de la compra:{{obj.total}}<br><br>
+    </td>
+    {% endfor %}
+        total:{{factura.valor}}
+    </div>
+
+    <div>
+        generar reporte
+        <button>imprimir</button>
+        <button>pdf</button>
+    </div>
+{% endblock content %}
+        

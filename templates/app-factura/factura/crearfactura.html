@@ -37,7 +37,7 @@
                                 name="usuario ">
                                 <option value="">---------</option>
                                 {% for usuarios in usuario %}
-                                <option value="{{usuarios.id}}">{{usuarios.identificacion}}</option>
+                                <option value="{{usuarios.id}}">{{usuarios.identificacion}} {{usuarios.nombre}}</option>
                                 {% endfor %}
 
                             </select>
@@ -95,9 +95,7 @@
                                 <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
                                     valor
                                 </th>
-                                <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
-                                    decision
-                                </th>
+                                
                                 <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
                                     Estado
                                 </th>
@@ -116,28 +114,20 @@
                                 </th>
                                 <td class="px-6 py-4">{{facturas.vehiculo}}</td>
                                 <td class="px-6 py-4">{{facturas.valor}}</td>
-                                <td class="px-6 py-4">{{facturas.decision}}</td>
                                 <td class="px-6 py-4">{{facturas.estado}}</td>
 
                                 <td class="flex justify-around px-6 py-4 text-right">
                                     {% comment %} Editar {% endcomment %}
+                                    {% if facturas.estado == 'Abierta' %}
+                                    {% comment %} Eliminar {% endcomment %}
+                                    
+                                    
+                                    
                                     <a href="{% url 'factura_estado' facturas.id facturas.estado %}"
                                         data-modal-toggle="popup-modal" title="Inactivo"
-                                        class="font-medium text-light-white md:hover:text-blue-700 dark:text-blue-500"><svg
-                                            class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd"
-                                                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                                clip-rule="evenodd"></path>
-                                        </svg>
+                                        class="font-medium text-light-white md:hover:text-blue-700 dark:text-blue-500"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
                                     </a>
-                                    {% comment %} Eliminar {% endcomment %}
 
-                                    {% if usuario.estado == 'Activo' %}
-
-
-
-                                    {% else  %}
                                     <a href="{% url 'detalle' facturas.id %}" data-tooltip-target="tooltip-bottom"
                                         data-tooltip-placement="bottom" type="button"
                                         class="font-medium text-light-white md:hover:text-blue-700 dark:text-blue-500 hover:underline"
@@ -154,6 +144,13 @@
                                         compras de la factura
                                         <div class="tooltip-arrow" data-popper-arrow></div>
                                     </div>
+                                    
+                                    {% endif %}
+                                    {% if facturas.estado == 'Cerrada' %}
+                                    <a href="{% url 'vizualizar' facturas.id %}"
+                                        data-modal-toggle="popup-modal" title="Inactivo"
+                                        class="font-medium text-light-white md:hover:text-blue-700 dark:text-blue-500"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path></svg>
+                                    </a>
                                     {% endif %}
                                 </td>
                             </tr>
