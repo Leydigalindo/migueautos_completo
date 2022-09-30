@@ -11,7 +11,6 @@ class Factura(models.Model):
     class Estado(models.TextChoices):
         ABIERTA = 'Abierta', _('Abierta')
         CERRADA = 'Cerrada', _('Cerrada')
-        ANULADA = 'Anulada', _('Anulada')
     estado =models.CharField(max_length=10,choices=Estado.choices,verbose_name='estado',default=Estado.ABIERTA)
     class Decision(models.TextChoices):
         ACTIVA = 'Activa', _('Activa')
