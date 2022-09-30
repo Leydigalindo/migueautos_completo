@@ -33,7 +33,7 @@
                     <div class="mb-3">
                         <div class="relative">
                             <select
-                                class="block w-full px-4 py-2 leading-normal text-gray-700 bg-white border border-gray-300 rounded-lg appearance-none select1 js-example-basic-single focus:outline-none"
+                                class="block w-full px-4 py-2 leading-normal text-gray-700 bg-white border border-gray-300 rounded-lg appearance-none select1 js-example-basic-single focus:outline-none " required
                                 name="usuario ">
                                 <option value="">---------</option>
                                 {% for usuarios in usuario %}
@@ -52,7 +52,7 @@
                         <div class="relative">
                             <select
                                 class="block w-full px-4 py-2 leading-normal text-gray-700 bg-white border border-gray-300 rounded-lg appearance-none js-example-basic-single select2 focus:outline-none"
-                                name="vehiculo">
+                                name="vehiculo" required>
                                 <option value="">---------</option>
                                 
                                 {% for vehiculo in vehiculos %}

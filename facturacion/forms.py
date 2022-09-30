@@ -20,7 +20,7 @@ class DetalleForm(forms.ModelForm):
         return price
     class Meta: 
         model = Detalle
-        fields = ['producto','cantidad_detalle']
+        fields = ['cantidad_detalle']
         
 
         

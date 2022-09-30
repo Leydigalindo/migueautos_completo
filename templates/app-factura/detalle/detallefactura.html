@@ -5,7 +5,7 @@ Vizualizar factura
 {% endblock title %}
 
 {% block content %}
-    
+
 
 <div class="flex flex-col w-full mb-20 text-center">
     <h1 class="mb-2 text-3xl font-medium text-gray-900 print:hidden sm:text-4xl title-font">{{titulo_pag }}</h1>
@@ -19,29 +19,64 @@ Vizualizar factura
 
             <div class="col">
             <form action="" class="print:hidden" method="POST">    
+
                 {% csrf_token %}
+                <div id="div_id_producto" class="mb-3"> <label for="id_producto"
+                        class="block mb-2 text-sm font-bold text-gray-700">
+                        Producto<span class="asteriskField">*</span> </label>
+                    <div class="mb-3">
+                        <div class="relative">
+                            <select
+                                class="block w-full px-4 py-2 leading-normal text-gray-700 bg-white border border-gray-300 rounded-lg appearance-none js-example-basic-single focus:outline-none"
+                                name="producto">
+                                <option value="">---------</option>
+
+                                {% for producto in productos %}
+
+                                <option value="{{producto.id}}">{{producto.nombre}} {{producto.categoria}} {{producto.stock}}</option>
+                                {% endfor %}
+
+                            </select>
+                            <div
+                                class="absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 pointer-events-none">    
+                                <svg class="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20">
+                                    <path
+                                        d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
                 {{servicios|crispy}}
-                <div class="flex justify-center">
-                    
                 
-                <div class="flex justify-center">    
-                    <button class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
-                        <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                            Añadir producto
-                        </span>
-                    </button>
-                </div>
                 <div class="flex justify-center">
-                    
-                
-                <a href="{% url 'factura_estado' pk=factura.id estado="Cerrada" %}" class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800">
-                    <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                        Cerrar factura
-                    </span>
-                  </a>
+
+
+                    <div class="flex justify-center">
+                        <button
+                            class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
+                            <span
+                                class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                                Añadir producto
+                            </span>
+                        </button>
+                    </div>
+                    <div class="flex justify-center">
+
+
+                        <a href="{% url 'factura_estado' pk=factura.id estado="Cerrada" %}"
+                            class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800">
+                            <span
+                                class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                                Cerrar factura
+                            </span>
+                        </a>
+                    </div>
                 </div>
-            </div>
-                </form>
+            </form>
         </div>
     </div>
     <div class="max-w-3xl p-6 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-md col dark:bg-gray-800 dark:border-gray-700">
@@ -109,12 +144,26 @@ Vizualizar factura
                 <button> Generar reporte </button>
                 <button>Imprimir</button>
                 <button>Pdf</button>
+
             </div>
+        </div>
     </div>
 </div>
-<div  class="px-2 mb-2 font-sans text-xl font-bold text-center break-normal dark:text-white lg:mt-0 md:text-2xl">
+<div class="px-2 mb-2 font-sans text-xl font-bold text-center break-normal dark:text-white lg:mt-0 md:text-2xl">
     <br>
     Total de la factura: ${{total}}<br>
 </div>
+
 </div>
 {% endblock content %}
+{% block extrajs %}
+<script>
+
+    $(document).ready(function () {
+        $('.js-example-basic-single').select2({
+            language: "es"
+        });
+
+    });
+</script>
+{% endblock extrajs %}

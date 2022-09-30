@@ -19,7 +19,8 @@ def factura(request):
     usuarios= Usuario.objects.all()
     vehiculos = Vehículo.objects.all()
     facturas = Factura.objects.all()
-
+    
+    
     if request.method == 'POST':
         form = FacturaForm(request.POST)
         if Factura.objects.filter(usuario_id= request.POST['usuario '],vehiculo_id= request.POST['vehiculo'],).exists():
@@ -27,6 +28,7 @@ def factura(request):
             messages.warning(request,f'Ya hay una factura creada de ese usuario')
             return redirect('generar')
         else:
+            
             if form.is_valid():
                
                 aux= Factura.objects.create(
@@ -138,7 +140,7 @@ def detalle(request,pk):
 def detalle_estado(request,pk,cantidad ):
 
     u_detalles= Detalle.objects.get(id=pk)
-    factura_u= Factura.objects.get(id=pk)
+    factura_u= u_detalles.factura
     detalles= Detalle.objects.filter(factura_id=factura_u.id)
     titulo_pagina = f'Agregando productos a la factura #{factura_u.id}'
     accion_txt= f"el detalle {u_detalles.id} "
