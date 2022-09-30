@@ -243,15 +243,15 @@ def factura_estado(request,pk, estado):
             messages.warning(request,f'La factura {pk} no se puede eliminar, tiene productos registrados')
             return redirect('generar')
     elif estado == "Cerrada":
-        estado_txt= "Anular"
-        estado_msj= f"Factura {tfactura.id}, una vez anulada no se podrá restablecer."
+        estado_txt= "Usted se encuentra cerrando su factura despues de esto no podra agregar ningun producto solo se podra vizualizar la factura y generar impresion de los productos ya en la factura"
+        estado_msj= f"Factura {tfactura.id}, una vez cerrada no se podrá restablecer."
         if request.method == 'POST':
             form = FacturaForm(request.POST)
             Factura.objects.filter(id=pk).update(
-                        estado='Anulada'
+                        estado='Cerrada'
                     )
             tfactura_usuario=  tfactura.usuario
-            messages.success(request,f'Factura {tfactura.id} anulada correctamente')
+            messages.success(request,f'Factura {tfactura.id} cerrada correctamente')
             return redirect('generar')
         else:
             form=FacturaForm()
