@@ -103,6 +103,12 @@
                                     Estado
                                 </th>
                                 <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
+                                    Fecha de creación
+                                </th>
+                                <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
+                                    Fecha de última modificación
+                                </th>
+                                <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
                                     Opciones
                                 </th>
                             </tr>
@@ -119,7 +125,8 @@
                                 <td class="px-6 py-4">{{usuario.identificacion}}</td>
                                 <td class="px-6 py-4">{{usuario.telefono}}</td>
                                 <td class="px-6 py-4">{{usuario.estado}}</td>
-
+                                <td class="px-6 py-4">{{usuario.date_created}}</td>
+                                <td class="px-6 py-4">{{usuario.date_updated}}</td>
                                 <td class="flex justify-around px-6 py-4 text-right">
                                     {% comment %} Editar {% endcomment %}
                                     <a href="{% url 'editarUsuario' usuario.id %}" data-modal-toggle="popup-modal" title="Inactivo"

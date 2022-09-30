@@ -78,6 +78,7 @@ def backup(request,tipo):
         "backups":backups
     }
     return render(request, 'backup.html',context)  
+@login_required(login_url='/login/')
 def help(request):
     context= {}
     return render(request, 'Ayuda/help.html', context)
