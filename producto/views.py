@@ -3,11 +3,13 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.shortcuts import render
 from django.db.models import Sum
+from django.contrib.auth.decorators import login_required
 
 from .forms import *
 from .models import *
 from registro.models import *
 # Create your views here.
+@login_required(login_url='/login/')
 def marca(request):
 
     """ En esta funcion se carga formulario y se guarda en la base de datos, y tambien imprime esta 
@@ -33,7 +35,7 @@ def marca(request):
         "form":form
     }
     return render(request, "app-producto/marca/crearmarca.html", context)
-
+@login_required(login_url='/login/')
 def marca_eliminar(request,pk):
 
     """
@@ -67,7 +69,7 @@ def marca_eliminar(request,pk):
             
     }
     return render(request, "app-producto/marca/marca-eliminar.html", context)
-
+@login_required(login_url='/login/')
 def Editarmarca(request,pk):
     titulo_pagina="Producto"
     marcas= Marca.objects.get(id=pk)
@@ -89,7 +91,7 @@ def Editarmarca(request,pk):
 
 
 
-
+@login_required(login_url='/login/')
 def mostrarProducto(request,pk):
     producto = Producto.objects.get(id=pk)
     titulo_pag = f'Producto {producto.nombre}'
@@ -99,7 +101,7 @@ def mostrarProducto(request,pk):
     }
     return render(request, "app-producto/producto/verproducto.html")
 
-
+@login_required(login_url='/login/')
 def editarproducto(request,pk):
     producto = Producto.objects.get(id=pk)
     titulo_pag = f'Editando producto {producto.nombre}'
@@ -107,9 +109,9 @@ def editarproducto(request,pk):
         form = ProductoForm(request.POST, instance=producto)
         nombre_producto = request.POST['nombre']
         if form.is_valid():
-            nombre = form.cleaned_data['nombre']
-            marca = form.cleaned_data['marca']
-            categoria = form.cleaned_data['categoria']
+                nombre = form.cleaned_data['nombre']
+                marca = form.cleaned_data['marca']
+                categoria = form.cleaned_data['categoria']
         if Producto.objects.filter(nombre=nombre,marca=marca,categoria=categoria).exists():
             messages.success(request,f'El producto {nombre_producto} coincide con los mismos datos de otro producto')
             return redirect('producto-crearproducto')
@@ -127,6 +129,7 @@ def editarproducto(request,pk):
     }
     return render(request,'app-producto/producto/editarproducto.html', context)
 
+@login_required(login_url='/login/')
 def producto_eliminar(request,pk):
     titulo_pagina='producto'
     productoTs= Producto.objects.all()
@@ -152,6 +155,7 @@ def producto_eliminar(request,pk):
     }
     return render(request, "app-producto/producto/eliminar-producto.html", context)
 
+@login_required(login_url='/login/')
 def productoInactivo (request):
     """
     Se imprime la informacion de todos los productos guardados
@@ -165,6 +169,7 @@ def productoInactivo (request):
     }
     return render(request,"app-producto/producto/productoInactivo.html", context)
 
+@login_required(login_url='/login/')
 def producto(request):
     usuario_c= Usuario.objects.exclude(estado="Inactivo")
     marcas_db = Marca.objects.exclude(estado="Inactivo")
@@ -208,7 +213,7 @@ def producto(request):
     
     return render(request,'app-producto/producto/crearproducto.html', context)
 
-
+@login_required(login_url='/login/')
 def sumar_stock(request,pk):
     producto = Producto.objects.get(id=pk)
     
