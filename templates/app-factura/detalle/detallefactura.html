@@ -5,7 +5,7 @@ vizualizar factura
 {% endblock title %}
 
 {% block content %}
-    
+
 
 <div class="flex flex-col w-full mb-20 text-center">
     <h1 class="mb-2 text-3xl font-medium text-gray-900 print:hidden sm:text-4xl title-font">{{titulo_pag }}</h1>
@@ -18,102 +18,170 @@ vizualizar factura
 <div class="flex mx-auto mt-6 overflow-hidden border-2 border-indigo-500 rounded">
     <div class="w-full p-4 xl:w-1/3 print:hidden md:w-1/2">
         <div class="relative flex flex-col h-full p-6 overflow-hidden border-2 border-gray-300 rounded-lg print:hidden">
-            <form action="" class="print:hidden" method="POST">    
+            <form action="" class="print:hidden" method="POST">
                 {% csrf_token %}
+                <div id="div_id_producto" class="mb-3"> <label for="id_producto"
+                        class="block mb-2 text-sm font-bold text-gray-700">
+                        Producto<span class="asteriskField">*</span> </label>
+                    <div class="mb-3">
+                        <div class="relative">
+                            <select
+                                class="block w-full px-4 py-2 leading-normal text-gray-700 bg-white border border-gray-300 rounded-lg appearance-none js-example-basic-single focus:outline-none"
+                                name="producto">
+                                <option value="">---------</option>
+
+                                {% for producto in productos %}
+
+                                <option value="{{producto.id}}">{{producto.nombre}} {{producto.categoria}} {{producto.stock}}</option>
+                                {% endfor %}
+
+                            </select>
+                            <div
+                                class="absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 pointer-events-none">    
+                                <svg class="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20">
+                                    <path
+                                        d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
                 {{servicios|crispy}}
-                <div class="flex justify-center">
-                    
                 
-                <div class="flex justify-center">    
-                    <button class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
-                        <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                            Añadir producto
-                        </span>
-                    </button>
-                </div>
                 <div class="flex justify-center">
-                    
-                
-                <a href="{% url 'factura_estado' pk=factura.id estado="Cerrada" %}" class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800">
-                    <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                        Cerrar factura
-                    </span>
-                  </a>
+
+
+                    <div class="flex justify-center">
+                        <button
+                            class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
+                            <span
+                                class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                                Añadir producto
+                            </span>
+                        </button>
+                    </div>
+                    <div class="flex justify-center">
+
+
+                        <a href="{% url 'factura_estado' pk=factura.id estado="Cerrada" %}"
+                            class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800">
+                            <span
+                                class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                                Cerrar factura
+                            </span>
+                        </a>
+                    </div>
                 </div>
-            </div>
-                </form>
+            </form>
         </div>
     </div>
     <div class="w-full p-4 xl:w-full md:w-1/2">
-        <div class="max-w-full p-6 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-md col dark:bg-gray-800 dark:border-gray-700"> 
-        <div class="relative flex flex-col h-full p-6 overflow-hidden border-2 border-gray-300 rounded-lg">
-            <table  class="min-w-full text-sm text-left text-gray-500 rounded-sm dark:text-gray-400">
-                <thead class="text-xs text-gray-700 bg-light-white dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                        <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
-                            Nombre
-                        </th>
-                        <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
-                            categoria
-                        </th>
-                        <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
-                            marca
-                        </th>
-                        <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
-                            imagen
-                        </th>
-                        <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
-                            cantidad
-                        </th>
-                        <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
-                            precio
-                        </th>
-                        <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
-                            opciones
-                        </th>
-                    </tr>
+        <div
+            class="max-w-full p-6 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-md col dark:bg-gray-800 dark:border-gray-700">
+            <div class="relative flex flex-col h-full p-6 overflow-hidden border-2 border-gray-300 rounded-lg">
+                <table class="min-w-full text-sm text-left text-gray-500 rounded-sm dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 bg-light-white dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
+                                Nombre
+                            </th>
+                            <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
+                                categoria
+                            </th>
+                            <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
+                                marca
+                            </th>
+                            <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
+                                imagen
+                            </th>
+                            <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
+                                cantidad
+                            </th>
+                            <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
+                                precio
+                            </th>
+                            <th scope="col" class="px-6 py-4 text-sm font-medium text-black">
+                                opciones
+                            </th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                                >
-                                {% for obj in detalle %}
-                                {% if obj.estado == "Abierta" %}
-                                  
-                                
-                                <td>{{obj.producto.nombre}}</td>
-                                <td>{{obj.producto.categoria}}</td>
-                                <td>{{obj.producto.marca}}</td>
-                                <td><img src="{{ obj.producto.get_image }}" style="width: 50px; height: 50px;" alt="imagen-producto"></td>
-                                <td>{{obj.cantidad_detalle}}</td>
-                                <td>{{obj.total}}</td>
-                                <td>
-                                    <div class="flex justify-center print:hidden">
-                                        <a href="{% url 'detalle_eliminar_estado' pk=obj.id  cantidad=obj.cantidad_detalle %}"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
-                                            <a href="{% url 'detalle_eliminar_estado' pk=obj.id  cantidad=obj.cantidad_detalle %}"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
-                                                <a href="{% url 'detalle_eliminar_estado' pk=obj.id  cantidad=obj.cantidad_detalle %}"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
-                                            </div>
-                                            
-                                    
-                  
-                                  {% endif %}
-                              </td>
+                        <tr
+                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            {% for obj in detalle %}
+                            {% if obj.estado == "Abierta" %}
+
+
+                            <td>{{obj.producto.nombre}}</td>
+                            <td>{{obj.producto.categoria}}</td>
+                            <td>{{obj.producto.marca}}</td>
+                            <td><img src="{{ obj.producto.get_image }}" style="width: 50px; height: 50px;"
+                                    alt="imagen-producto"></td>
+                            <td>{{obj.cantidad_detalle}}</td>
+                            <td>{{obj.total}}</td>
+                            <td>
+                                <div class="flex justify-center print:hidden">
+                                    <a
+                                        href="{% url 'detalle_eliminar_estado' pk=obj.id  cantidad=obj.cantidad_detalle %}"><svg
+                                            class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd"
+                                                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                                clip-rule="evenodd"></path>
+                                        </svg>
+                                        <a
+                                            href="{% url 'detalle_eliminar_estado' pk=obj.id  cantidad=obj.cantidad_detalle %}"><svg
+                                                class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd"
+                                                    d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                                                    clip-rule="evenodd"></path>
+                                            </svg>
+                                            <a
+                                                href="{% url 'detalle_eliminar_estado' pk=obj.id  cantidad=obj.cantidad_detalle %}"><svg
+                                                    class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd"
+                                                        d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                                                        clip-rule="evenodd"></path>
+                                                </svg>
+                                </div>
+
+
+
+                            </tr>
+                                {% endif %}
                                 {% endfor %}
                                 
-                        </tr>
+                        </td>
                     </tbody>
-                    </table>
-                </div>
+                </table>
             </div>
-            <div class="print:hidden">
-                generar reporte
-                <button>imprimir</button>
-                <button>pdf</button>
-            </div>
+        </div>
+        <div class="print:hidden">
+            generar reporte
+            <button>imprimir</button>
+            <button>pdf</button>
+        </div>
     </div>
 </div>
-<div  class="px-2 mb-2 font-sans text-xl font-bold text-center break-normal dark:text-white lg:mt-0 md:text-2xl">
+<div class="px-2 mb-2 font-sans text-xl font-bold text-center break-normal dark:text-white lg:mt-0 md:text-2xl">
     <br>
     Total de la factura: ${{total}}<br>
 </div>
 
 {% endblock content %}
+{% block extrajs %}
+<script>
+
+    $(document).ready(function () {
+        $('.js-example-basic-single').select2({
+            language: "es"
+        });
+
+    });
+</script>
+{% endblock extrajs %}
